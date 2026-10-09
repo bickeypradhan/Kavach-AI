@@ -1,0 +1,20 @@
+PS6: Build a prototype AI system that detects: Safety gear compliance
+Factories face constant risk from unsafe worker practices and hazardous incidents
+such as smoke and fire. Yet detection and response are often delayed or
+inconsistent. Many industrial sites rely on manual monitoring, periodic
+inspections, or standalone alarms that may not quickly identify unsafe gear usage
+or provide timely, location-specific evidence of smoke or fire. This leads to slower
+evacuation, increased damage, and higher risk of injury or worse outcomes.
+There is a need for an AI-based, real-time monitoring system that can automatically
+detect whether workers are wearing required safety gear and identify early signs of
+smoke and fire within factory premises. The solution should operate reliably in
+dynamic industrial environments, support fast alerting to the right personnel, and
+help reduce incident response time by providing actionable insights such as the
+aƯected area and detected event type.
+Hackathon Goal:
+Build a prototype AI system that detects:
+Safety gear compliance (e.g., helmets, high-visibility vests, protective footwear,
+gloves where applicable), Smoke presence, Fire presence in real time from
+CCTV/video feeds or recorded footage, and generates alerts with location/context
+to enable faster intervention and improved safety compliance across factory
+operations..yy

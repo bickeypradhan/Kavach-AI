@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - PORT=8000
+      - SIMULATION_MODE=false
+    deploy:
+      resources:
+        limits:
+          cpus: '2'
+          memory: 4G
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    restart: always
+    environment:
+      - PORT=3001
+      - NODE_ENV=production
+      - AI_SERVICE_URL=http://ai-service:8000
+    deploy:
+      resources:
+        limits:
+          cpus: '1'
+          memory: 1G
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always

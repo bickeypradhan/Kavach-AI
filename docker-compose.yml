@@ -1,0 +1,61 @@
+version: '3.8'
+
+services:
+  ai-service:
+    build:
+      context: ./ai-service
+      dockerfile: Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      - PORT=8000
+      - SIMULATION_MODE=true
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    ports:
+      - "3001:3001"
+    environment:
+      - PORT=3001
+      - JWT_SECRET=factory-safety-jwt-secret-dev
+      - AI_SERVICE_URL=http://ai-service:8000
+      - DATABASE_PATH=/app/data/factory-safety.db
+      - UPLOAD_DIR=/app/uploads
+      - EVIDENCE_DIR=/app/evidence
+    volumes:
+      - backend-data:/app/data
+      - backend-uploads:/app/uploads
+      - backend-evidence:/app/evidence
+    depends_on:
+      ai-service:
+        condition: service_started
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:3001/api/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "80:80"
+    depends_on:
+      backend:
+        condition: service_started
+    restart: unless-stopped
+
+volumes:
+  backend-data:
+  backend-uploads:
+  backend-evidence:
